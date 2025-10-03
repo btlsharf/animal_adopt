@@ -16,19 +16,13 @@ const passUserToView = require('./middleware/pass-user-to-view.js');
 // Controllers
 const authController = require('./controllers/auth.js');
 
-// Set the port from environment variable or default to 3000
-const PORT = process.env.PORT ? process.env.PORT : '3000';
+const PORT = '5000';
 
 // MIDDLEWARE
-//
-// Middleware to parse URL-encoded data from forms
 app.use(express.urlencoded({ extended: false }));
-// Middleware for using HTTP verbs such as PUT or DELETE
 app.use(methodOverride('_method'));
-// Morgan for logging HTTP requests
 app.use(morgan('dev'));
 
-// Session Storage with MongoStore
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
