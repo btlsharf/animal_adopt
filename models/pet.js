@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const animalSchema = new mongoose.Schema({
+const petSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -19,7 +19,6 @@ const animalSchema = new mongoose.Schema({
     type: Number,
     required: true,
     min: 0,
-    max: 30
   },
   ageUnit: {
     type: String,
@@ -29,11 +28,6 @@ const animalSchema = new mongoose.Schema({
   gender: {
     type: String,
     enum: ['male', 'female', 'unknown'],
-    required: true
-  },
-  size: {
-    type: String,
-    enum: ['small', 'medium', 'large', 'extra-large'],
     required: true
   },
   description: {
@@ -53,11 +47,6 @@ const animalSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
-  adoptionFee: {
-    type: Number,
-    min: 0,
-    default: 0
-  },
   status: {
     type: String,
     enum: ['available', 'pending', 'adopted'],
@@ -67,9 +56,14 @@ const animalSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
+  },
+  contactInfo: {
+    type: String,
+    required: true,
+    maxlength: 100
   }
 });
 
-const Animal = mongoose.model('Animal', animalSchema);
+const Pet = mongoose.model('Pet', petSchema);
 
-module.exports = Animal;
+module.exports = Pet;
