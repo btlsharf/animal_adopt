@@ -12,6 +12,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const isSignedIn = require('./middleware/is-signed-in.js');
 const passUserToView = require('./middleware/pass-user-to-view.js');
+const flash = require('connect-flash');
 
 // Controllers
 const authController = require('./controllers/auth.js');
@@ -34,6 +35,7 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
     }
 }));
+app.use(flash());
 
 //routes
 app.get('/', (req, res) => {

@@ -20,11 +20,6 @@ const petSchema = new mongoose.Schema({
     required: true,
     min: 0,
   },
-  ageUnit: {
-    type: String,
-    enum: ['months', 'years'],
-    default: 'years'
-  },
   gender: {
     type: String,
     enum: ['male', 'female', 'unknown'],
@@ -61,7 +56,11 @@ const petSchema = new mongoose.Schema({
     type: String,
     required: true,
     maxlength: 100
-  }
+  },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 const Pet = mongoose.model('Pet', petSchema);
