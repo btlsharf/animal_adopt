@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Adoption Platform</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+    <%- include('navbar') %>
+    <%- include('flash') %>
+    <main class="container">
+    <div class="profile-page">
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <%= user.username.charAt(0).toUpperCase() %>
+                </div>
+                <div class="profile-info">
+                    <h1><%= user.username %></h1>
+                    <p class="profile-email"><%= user.email %></p>
+                    <p class="profile-joined">Member since <%= new Date(user.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) %></p>
+                </div>
+                <div class="profile-actions">
+                    <a href="/user/show/edit" class="btn btn-primary">Edit Profile</a>
+                </div>
+            </div>
+            
+            <div class="profile-stats">
+                <div class="stat-card">
+                    <h3>Quick Links</h3>
+                    <ul class="profile-links">
+                        <li><a href="/user/my-pets">My Listed Pets</a></li>
+                        <li><a href="/favorites">My Favorites</a></li>
+                        <li><a href="/pets/new/form">List a New Pet</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2025 Pet Adoption Platform. All rights reserved.</p>
+            </div>
+        </footer>
+        <script src="/js/favorites.js"></script>
+    </body>
+    </html>

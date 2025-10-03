@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Adoption Platform</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+    <%- include('navbar') %>
+    <%- include('flash') %>
+    <main class="container">
+<div class="favorites-page">
+    <div class="page-header">
+        <h1>My Favorite Pets</h1>
+    </div>
+    
+    <% if (favorites.length === 0) { %>
+        <div class="no-pets">
+            <p>You haven't added any favorites yet.</p>
+            <a href="/pets" class="btn btn-primary">Browse Pets</a>
+        </div>
+    <% } else { %>
+        <div class="pets-grid">
+            <% favorites.forEach(pet => { %>
+                <div class="pet-card">
+                    <div class="pet-image">
+                        <img src="<%= pet.imageUrl %>" alt="<%= pet.name %>">
+                        <span class="status-badge <%= pet.status %>"><%= pet.status %></span>
+                    </div>
+                    <div class="pet-info">
+                        <h3><%= pet.name %></h3>
+                        <p class="pet-species"><%= pet.species.charAt(0).toUpperCase() + pet.species.slice(1) %> <% if (pet.breed) { %>• <%= pet.breed %><% } %></p>
+                        <p class="pet-owner">Listed by: <%= pet.owner.username %></p>
+                        <p class="pet-description"><%= pet.description.substring(0, 100) %>...</p>
+                        <div class="pet-card-footer">
+                            <a href="/pets/<%= pet._id %>" class="btn btn-primary">View Details</a>
+                            <form action="/favorites/<%= pet._id %>?_method=DELETE" method="POST" style="display: inline;">
+                                <button type="submit" class="btn btn-danger">Remove</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    <% } %>
+</div>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Adoption Platform</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+    <%- include('navbar') %>
+    <%- include('flash') %>
+    <main class="container">

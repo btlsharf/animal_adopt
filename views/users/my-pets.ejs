@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Adoption Platform</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+    <%- include('navbar') %>
+    <%- include('flash') %>
+    <main class="container">
+<div class="my-pets-page">
+    <div class="page-header">
+        <h1>My Listed Pets</h1>
+        <a href="/pets/new/form" class="btn btn-primary">+ List a New Pet</a>
+    </div>
+    
+    <% if (pets.length === 0) { %>
+        <div class="no-pets">
+            <p>You haven't listed any pets yet.</p>
+            <a href="/pets/new/form" class="btn btn-primary">List Your First Pet</a>
+        </div>
+    <% } else { %>
+        <div class="pets-grid">
+            <% pets.forEach(pet => { %>
+                <div class="pet-card">
+                    <div class="pet-image">
+                        <img src="<%= pet.imageUrl %>" alt="<%= pet.name %>">
+                        <span class="status-badge <%= pet.status %>"><%= pet.status %></span>
+                    </div>
+                    <div class="pet-info">
+                        <h3><%= pet.name %></h3>
+                        <p class="pet-species"><%= pet.species.charAt(0).toUpperCase() + pet.species.slice(1) %></p>
+                        <p class="pet-description"><%= pet.description.substring(0, 80) %>...</p>
+                        <div class="pet-card-footer">
+                            <a href="/pets/<%= pet._id %>" class="btn btn-primary">View</a>
+                            <a href="/pets/<%= pet._id %>/edit" class="btn btn-secondary">Edit</a>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    <% } %>
+</div>
+
+</main>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Pet Adoption Platform. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="/js/favorites.js"></script>
+</body>
+</html>
