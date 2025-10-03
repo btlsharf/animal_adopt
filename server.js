@@ -27,23 +27,31 @@ app.use(morgan('dev'));
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     store: MongoStore.create({
         mongoUrl: process.env.MONGODB_URI
     }),
-    cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
-    }
 }));
 app.use(flash());
 
-//routes
+app.use(passUserToView);
+
+// Routes
 app.get('/', (req, res) => {
-    res.redirect('/pets');
+  res.render('index.ejs');
 });
-app.use('/pets', require('./routes/petRoutes'));
-app.use('/user', require('./routes/userRoutes'));
-app.use('/favorites', require('./routes/favoriteRoutes'));
+
+app.use('/auth', authController);
+app.use(isSignedIn);
+const petController = require('./controllers/pet.js');
+const userController = require('./controllers/user.js');
+const favoriteController = require('./controllers/favorite.js');
+app.use('/pets', petController);
+app.use('/user', userController);
+app.use('/favorites', favoriteController);
+
+// Home route
+
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

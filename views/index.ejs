@@ -4,19 +4,35 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home Page</title>
+  <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
-<% if (user) { %>
-<h1>Welcome to the app, <%= user.username %>!</h1>
-<p>
-  <a href="/auth/sign-out">Sign out</a>
-</p>
-<% } else { %>
-<h1>Welcome to the app, guest.</h1>
-<p>
-  <a href="/auth/sign-up">Sign up</a> or <a href="/auth/sign-in">Sign in</a>.
-</p>
-<% } %>
+  <main class="container">
+    <div class="form-page">
+      <div class="form-container">
+        <% if (user) { %>
+          <h1 class="page-title">Welcome to the app, <%= user.username %>!</h1>
+          <p class="form-subtitle">
+            <a href="/auth/sign-out" class="btn btn-secondary">Sign out</a>
+          </p>
+        <% } else { %>
+          <h1 class="page-title">Welcome to the app, guest.</h1>
+          <p class="form-subtitle">
+            <a href="/auth/sign-up" class="btn btn-primary">Sign up</a>
+            or
+            <a href="/auth/sign-in" class="btn btn-secondary">Sign in</a>.
+          </p>
+        <% } %>
+      </div>
+    </div>
+  </main>
 
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Pet Adoption Platform. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/js/favorites.js"></script>
 </body>
 </html>

@@ -1,20 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign In</title>
-  </head>
-  <body>
-    <h1>Sign In!</h1>
-    <form action="/auth/sign-in" method="POST">
-      <label for="username">Username:</label>
-      <input type="text" name="username" id="username" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In</title>
+  <link rel="stylesheet" href="/styles/style.css" />
+</head>
+<body>
+  <main class="container">
+    <div class="form-page">
+      <div class="form-container">
+        <h1 class="page-title">Sign In</h1>
+        <p class="form-subtitle">Welcome back! Please enter your credentials.</p>
 
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" />
+        <form action="/auth/sign-in" method="POST" class="pet-form">
+          <div class="form-group">
+            <label for="username">Username *</label>
+            <input type="text" name="username" id="username" required />
+          </div>
 
-      <button type="submit">Sign in</button>
-    </form>
-  </body>
+          <div class="form-group">
+            <label for="password">Password *</label>
+            <input type="password" name="password" id="password" required />
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Sign In</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Pet Adoption Platform. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/js/favorites.js"></script>
+</body>
 </html>
