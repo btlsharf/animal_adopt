@@ -23,33 +23,26 @@ app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 app.use(morgan('dev'));
 
-app.use(
-  session({
+app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: MongoStore.create({
-      mongoUrl: process.env.MONGODB_URI,
+        mongoUrl: process.env.MONGODB_URI
     }),
-  })
-);
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+    }
+}));
 
-// Add user variable to all templates
-app.use(passUserToView);
-
-// PUBLIC
+//routes
 app.get('/', (req, res) => {
-  res.render('index.ejs');
+    res.redirect('/pets');
 });
-
-app.use('/auth', authController);
-
-// PROTECTED
-
-app.get('/vip-lounge', isSignedIn, (req, res) => {
-  res.send(`Welcome to the party ${req.session.user.username}.`);
-});
+app.use('/pets', require('./routes/petRoutes'));
+app.use('/user', require('./routes/userRoutes'));
+app.use('/favorites', require('./routes/favoriteRoutes'));
 
 app.listen(PORT, () => {
-  console.log(`The express app is ready on port ${PORT}!`);
+    console.log(`Server running on port ${PORT}`);
 });
