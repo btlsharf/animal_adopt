@@ -50,7 +50,7 @@ exports.newPetForm = (req, res) => {
 };
 // Create new pet
 exports.createPet = async (req, res) => {
-    const { name, species, breed, age, gender, description, isVaccinated, isSpayedNeutered, status, contactInfo} = req.body;
+    const { name, species, breed, age, gender, description, isVaccinated, isSpayedNeutered, status} = req.body;
     const petData = {
         name,
         species,
@@ -60,8 +60,7 @@ exports.createPet = async (req, res) => {
         description,
         isVaccinated,
         isSpayedNeutered,
-        status,
-        contactInfo,
+        status,,
         owner: req.session.user._id
     };  
     if (req.file) {
@@ -97,7 +96,7 @@ exports.updatePet = async (req, res) => {
         req.flash('error', 'You do not have permission to edit this pet');
         return res.redirect(`/pets/${pet._id}`);
     } 
-    const { name, species, breed, age, gender, description, isVaccinated, isSpayedNeutered, status, contactInfo } = req.body;   
+    const { name, species, breed, age, gender, description, isVaccinated, isSpayedNeutered, status } = req.body;   
     pet.name = name;
     pet.species = species;
     pet.breed = breed;
@@ -108,7 +107,6 @@ exports.updatePet = async (req, res) => {
     pet.description = description;
     pet.location = location;
     pet.status = status;
-    pet.contactInfo = contactInfo;
     if (req.file) {
         pet.imageUrl = '/uploads/' + req.file.filename;
     }

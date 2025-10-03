@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Adoption Platform</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+    <%- include('navbar') %>
+    <%- include('flash') %>
+    <main class="container">
+
+    <div class="pets-page">
+        <div class="page-header">
+            <h1>Available Pets for Adoption</h1>
+            <p>Find your perfect companion</p>
+        </div>
+        
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <form action="/pets" method="GET" class="filter-form">
+                <div class="filter-group">
+                    <label for="search">Search:</label>
+                    <input type="text" id="search" name="search" placeholder="Search by name, breed..." value="<%= filters.search || '' %>">
+                </div>
+                
+                <div class="filter-group">
+                    <label for="species">Species:</label>
+                    <select id="species" name="species">
+                        <option value="all" <%= (!filters.species || filters.species === 'all') ? 'selected' : '' %>>All</option>
+                        <option value="dog" <%= filters.species === 'dog' ? 'selected' : '' %>>Dog</option>
+                        <option value="cat" <%= filters.species === 'cat' ? 'selected' : '' %>>Cat</option>
+                        <option value="bird" <%= filters.species === 'bird' ? 'selected' : '' %>>Bird</option>
+                        <option value="rabbit" <%= filters.species === 'rabbit' ? 'selected' : '' %>>Rabbit</option>
+                        <option value="other" <%= filters.species === 'other' ? 'selected' : '' %>>Other</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="status">Status:</label>
+                    <select id="status" name="status">
+                        <option value="all" <%= (!filters.status || filters.status === 'all') ? 'selected' : '' %>>All</option>
+                        <option value="available" <%= filters.status === 'available' ? 'selected' : '' %>>Available</option>
+                        <option value="pending" <%= filters.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Filter</button>
+                <a href="/pets" class="btn btn-secondary">Clear</a>
+            </form>
+        </div>
+        
+        <!-- Pets Grid -->
+        <div class="pets-grid">
+            <% if (pets.length === 0) { %>
+                <div class="no-pets">
+                    <p>No pets found matching your criteria.</p>
+                    <% if (currentUser) { %>
+                        <a href="/pets/new/form" class="btn btn-primary">List a Pet</a>
+                    <% } %>
+                </div>
+            <% } else { %>
+                <% pets.forEach(pet => { %>
+                    <div class="pet-card">
+                        <div class="pet-image">
+                            <img src="<%= pet.imageUrl %>" alt="<%= pet.name %>">
+                            <span class="status-badge <%= pet.status %>"><%= pet.status %></span>
+                        </div>
+                        <div class="pet-info">
+                            <h3><%= pet.name %></h3>
+                            <p class="pet-species"><%= pet.species.charAt(0).toUpperCase() + pet.species.slice(1) %> <% if (pet.breed) { %>• <%= pet.breed %><% } %></p>
+                            <p class="pet-age"><% if (pet.age) { %><%= pet.age %> <%= pet.age === 1 ? 'year' : 'years' %> old<% } %></p>
+                            <p class="pet-location"><% if (pet.location) { %>📍 <%= pet.location %><% } %></p>
+                            <p class="pet-description"><%= pet.description.substring(0, 100) %>...</p>
+                            <div class="pet-card-footer">
+                                <a href="/pets/<%= pet._id %>" class="btn btn-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } %>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Pet Adoption Platform. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="/js/main.js"></script>
+    <script src="/js/favorites.js"></script>
+</body>
+</html>

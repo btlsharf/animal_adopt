@@ -52,15 +52,10 @@ const petSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
-  contactInfo: {
-    type: String,
-    required: true,
-    maxlength: 100
-  },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
+  createdAt: {
+      type: Date,
+      default: Date.now
+  }
 });
 
 const Pet = mongoose.model('Pet', petSchema);
