@@ -10,7 +10,6 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
 const path = require('path');
-
 const isSignedIn = require('./middleware/is-signed-in.js');
 const passUserToView = require('./middleware/pass-user-to-view.js');
 
@@ -26,15 +25,19 @@ const PORT = process.env.PORT || 5000;
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+
 // MIDDLEWARE
 
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(methodOverride('_method'));
 app.use(morgan('dev'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/styles', express.static(path.join(__dirname, 'styles')));
 app.use('/resources', express.static('resources'));
+app.use('/uploads', express.static('uploads'));
+app.use(methodOverride('_method'));
 
 app.use(session({
   secret: process.env.SESSION_SECRET,

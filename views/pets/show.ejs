@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
-    <%- include('navbar') %>
-    <%- include('flash') %>
+    <%- include('../partials/_navbar') %>
     <main class="container">
     <div class="pet-detail">
         <div class="pet-detail-header">
@@ -35,7 +34,7 @@
                     <span class="status-badge <%= pet.status %>"><%= pet.status %></span>
                 </div>
                 
-                <div class="pet-meta">
+                <div class="pet-meta"> 
                     <div class="meta-item">
                         <strong>Species:</strong>
                         <span><%= pet.species.charAt(0).toUpperCase() + pet.species.slice(1) %></span>
@@ -61,8 +60,18 @@
                         <span><%= pet.gender.charAt(0).toUpperCase() + pet.gender.slice(1) %></span>
                     </div>
                     <% } %>
-                    
+
+                    <div class="meta-item">
+                        <strong>Vaccinated:</strong>
+                        <span><%= pet.isVaccinated ? 'Yes' : 'No' %></span>
+                    </div>
+
+                    <div class="meta-item">
+                        <strong>Spayed/Neutered:</strong>
+                        <span><%= pet.isSpayedNeutered ? 'Yes' : 'No' %></span>
+                    </div>
                 </div>
+
                 
                 <div class="pet-description">
                     <h3>About <%= pet.name %></h3>

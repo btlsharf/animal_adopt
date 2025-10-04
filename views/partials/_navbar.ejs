@@ -11,14 +11,8 @@
             <% if (currentUser) { %>
                 <li><a href="/pets/new">List a Pet</a></li>
                 <li><a href="/favorites">Favorites</a></li>
-                <li><a href="/user/my-pets">My Pets</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle"><%= currentUser.username %></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/user/show">View Profile</a></li>
-                        <li><a href="/auth/sign-out">Logout</a></li>
-                    </ul>
-                </li>
+                <li><a href="/users/my-pets">My Pets</a></li>
+                <li><a href="/users/show" class="dropdown-toggle">My Profile</a></li>
             <% } else { %>
                 <li><a href="/auth/sign-in">Login</a></li>
                 <li><a href="/auth/sign-up" class="btn-primary">Sign Up</a></li>

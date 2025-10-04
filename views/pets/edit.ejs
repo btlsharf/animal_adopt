@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
-    <%- include('navbar') %>
-    <%- include('flash') %>
+    <%- include('../partials/_navbar') %>
     <main class="container">
     <div class="form-page">
         <div class="form-container">
@@ -58,13 +57,24 @@
                 
                 <div class="form-group">
                     <label for="isVaccinated">Vaccinated</label>
-                    <input type="checkbox" id="isVaccinated" name="isVaccinated">
+                    <input 
+                        type="checkbox" 
+                        id="isVaccinated" 
+                        name="isVaccinated" 
+                        value="true"
+                        <%= pet.isVaccinated ? 'checked' : '' %>>
+                    </div>
+
+                    <div class="form-group">
+                    <label for="isSpayedNeutered">Spayed/Neutered</label>
+                    <input 
+                        type="checkbox" 
+                        id="isSpayedNeutered" 
+                        name="isSpayedNeutered" 
+                        value="true"
+                    <%= pet.isSpayedNeutered ? 'checked' : '' %>>
                 </div>
 
-                <div class="form-group">
-                    <label for="isSpayedNeutered">Spayed/Neutered</label>
-                    <input type="checkbox" id="isSpayedNeutered" name="isSpayedNeutered">
-                </div>
                 
                 <div class="form-group">
                     <label for="status">Status *</label>
