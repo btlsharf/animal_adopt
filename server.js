@@ -12,7 +12,6 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const isSignedIn = require('./middleware/is-signed-in.js');
 const passUserToView = require('./middleware/pass-user-to-view.js');
-const flash = require('connect-flash');
 
 // Controllers
 const authController = require('./controllers/auth.js');
@@ -28,6 +27,13 @@ app.use(methodOverride('_method'));
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/styles', express.static(path.join(__dirname, 'styles')));
+app.use((req, res, next) => {
+  res.locals.currentUser = req.session?.user || null;
+  next();
+});
+app.use('/resources', express.static('resources'));
+
+
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -37,13 +43,12 @@ app.use(session({
         mongoUrl: process.env.MONGODB_URI
     }),
 }));
-app.use(flash());
 
 app.use(passUserToView);
 
 // Routes
 app.get('/', (req, res) => {
-  res.render('index.ejs');
+  res.render('index.ejs', { currentUser: req.user});
 });
 
 app.use('/auth', authController);

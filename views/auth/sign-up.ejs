@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="/styles/style.css" />
 </head>
 <body>
-
+  <%- include('../partials/_navbar') %>
   <main class="container">
     <div class="form-page">
       <div class="form-container">
@@ -18,6 +18,11 @@
           <div class="form-group">
             <label for="username">Username *</label>
             <input type="text" name="username" id="username" required />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" name="email" id="email" required />
           </div>
 
           <div class="form-group">
@@ -34,6 +39,7 @@
             <button type="submit" class="btn btn-primary">Sign Up</button>
           </div>
         </form>
+
       </div>
     </div>
   </main>

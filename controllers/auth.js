@@ -15,13 +15,18 @@ router.get('/sign-in', (req, res) => {
 
 router.post('/sign-up', async (req, res) => {
   const userInDatabase = await User.findOne({ username: req.body.username });
-
+  const { username, email, password, confirmPassword } = req.body;
   if (userInDatabase) {
     return res.send('Username or Password is invalid');
   }
 
   if (req.body.password !== req.body.confirmPassword) {
     return res.send('Password and Confirm Password must match');
+  }
+  
+
+  if (!email) {
+    return res.status(400).send('Email is required');
   }
 
   const hashedPassword = bcrypt.hashSync(req.body.password, 10);
