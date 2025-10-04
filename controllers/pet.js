@@ -3,43 +3,39 @@ const router = express.Router();
 const Pet = require('../models/pet');
 const User = require('../models/user');
 
-// Get all pets
+// Get all pets (without search)
 router.get('/', async (req, res) => {
   try {
-        const { species, status, search } = req.query;
-        let query = {};
-        if (species && species !== 'all') {
-            query.species = species;
-        }
-        if (status && status !== 'all') {
-            query.status = status;
-        }
-        if (search) {
-            query.$or = [
-                { name: { $regex: search, $options: 'i' } },
-                { breed: { $regex: search, $options: 'i' } },
-                { description: { $regex: search, $options: 'i' } }
-            ];
-        }
-        const pets = await Pet.find(query)
-            .populate('owner', 'username')
-            .sort({ createdAt: -1 });
-        
-        res.render('pets/index', { 
-            pets, 
-            filters: { species, status, search }
-        });
-    } catch (error) {
-        console.error(error);
-        req.flash('error', 'Error loading pets');
-        res.redirect('/');
+    const query = {};
+    if (req.query.species && req.query.species !== 'all') {
+      query.species = req.query.species;
     }
+    if (req.query.status && req.query.status !== 'all') {
+      query.status = req.query.status;
+    }
+    const pets = await Pet.find(query)
+      .populate('owner', 'username')
+      .sort({ createdAt: -1 });
+    res.render('pets/index', {
+      pets,
+      filters: {
+        species: req.query.species || 'all',
+        status: req.query.status || 'all',
+      },
+    });
+  } catch (error) {
+    console.error('Error loading pets:', error);
+    req.flash('error', 'Error loading pets');
+    res.redirect('/');
+  }
 });
+
+
 
 // Show single pet
 router.get('/:petId', async (req, res) => {
   try {
-        const pet = await Pet.findById(req.params.id).populate('owner', 'username email');
+        const pet = await Pet.findById(req.params.petId).populate('owner', 'username email');
         if (!pet) {
             req.flash('error', 'Pet not found');
             return res.redirect('/pets');
