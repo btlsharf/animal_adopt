@@ -5,8 +5,14 @@ const Pet = require('../models/pet');
 
 // Get user profile
 router.get('/show', async (req, res) => {
-  const user = await User.findById(req.session.user._id);
-  res.render('users/show', { user });
+    try{
+        const user = await User.findById(req.session.user._id);
+        res.render('users/show', { user });
+    } catch (error) {
+        console.error(error);
+        req.flash('error', 'Error loading profile');
+        return res.redirect('/pets');
+    }
 });
 
 // Show edit profile form

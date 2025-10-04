@@ -16,13 +16,17 @@ const flash = require('connect-flash');
 
 // Controllers
 const authController = require('./controllers/auth.js');
-
+const petController = require('./controllers/pet.js');
+const userController = require('./controllers/user.js');
+const favoriteController = require('./controllers/favorite.js');
 const PORT = '5000';
+const path = require('path');
 
 // MIDDLEWARE
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 app.use(morgan('dev'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -43,9 +47,6 @@ app.get('/', (req, res) => {
 
 app.use('/auth', authController);
 app.use(isSignedIn);
-const petController = require('./controllers/pet.js');
-const userController = require('./controllers/user.js');
-const favoriteController = require('./controllers/favorite.js');
 app.use('/pets', petController);
 app.use('/user', userController);
 app.use('/favorites', favoriteController);
