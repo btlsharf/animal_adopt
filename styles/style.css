@@ -302,8 +302,8 @@ body {
 
 .status-badge {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 13rem;
+    right: 2rem;
     padding: 0.5rem 1rem;
     border-radius: 20px;
     font-size: 0.85rem;
