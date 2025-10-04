@@ -3,34 +3,37 @@ const router = express.Router();
 const Pet = require('../models/pet');
 const User = require('../models/user');
 
-// Get all pets (without search)
+// // Get all pets (without search)
+// router.get('/', async (req, res) => {
+//   try {
+//     const query = {};
+//     if (req.query.species && req.query.species !== 'all') {
+//       query.species = req.query.species;
+//     }
+//     if (req.query.status && req.query.status !== 'all') {
+//       query.status = req.query.status;
+//     }
+//     const pets = await Pet.find(query)
+//       .populate('owner', 'username')
+//       .sort({ createdAt: -1 });
+//     res.render('pets/index', {
+//       pets,
+//       filters: {
+//         species: req.query.species || 'all',
+//         status: req.query.status || 'all',
+//       },
+//     });
+//   } catch (error) {
+//     console.error('Error loading pets:', error);
+//     req.flash('error', 'Error loading pets');
+//     res.redirect('/');
+//   }
+// });
+
 router.get('/', async (req, res) => {
-  try {
-    const query = {};
-    if (req.query.species && req.query.species !== 'all') {
-      query.species = req.query.species;
-    }
-    if (req.query.status && req.query.status !== 'all') {
-      query.status = req.query.status;
-    }
-    const pets = await Pet.find(query)
-      .populate('owner', 'username')
-      .sort({ createdAt: -1 });
-    res.render('pets/index', {
-      pets,
-      filters: {
-        species: req.query.species || 'all',
-        status: req.query.status || 'all',
-      },
-    });
-  } catch (error) {
-    console.error('Error loading pets:', error);
-    req.flash('error', 'Error loading pets');
-    res.redirect('/');
-  }
+  const pets = await Pet.find().populate('owner', 'username').sort({ createdAt: -1 });
+  res.render('pets/index', { pets, filters: {} });
 });
-
-
 
 // Show single pet
 router.get('/:petId', async (req, res) => {
