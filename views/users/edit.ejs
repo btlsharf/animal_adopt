@@ -7,14 +7,13 @@
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
-    <%- include('navbar') %>
-    <%- include('flash') %>
+    <%- include('../partials/_navbar') %>
     <main class="container">
 <div class="form-page">
     <div class="form-container">
         <h1>Edit Profile</h1>
         
-        <form action="/user/profile?_method=PUT" method="POST" class="profile-form">
+        <form action="/users/profile?_method=PUT" method="POST" class="profile-form">
             <div class="form-group">
                 <label for="username">Username *</label>
                 <input type="text" id="username" name="username" value="<%= user.username %>" required minlength="3">
@@ -27,7 +26,7 @@
             
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">Update Profile</button>
-                <a href="/user/show" class="btn btn-secondary">Cancel</a>
+                <a href="/users/show" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
     </div>

@@ -37,7 +37,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/styles', express.static(path.join(__dirname, 'styles')));
 app.use('/resources', express.static('resources'));
 app.use('/uploads', express.static('uploads'));
-app.use(methodOverride('_method'));
 
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -68,7 +67,7 @@ app.get('/', (req, res) => {
 app.use('/auth', authController);
 app.use('/pets', petController);
 app.use(isSignedIn);
-app.use('/user', userController);
+app.use('/users', userController);
 app.use('/favorites', favoriteController);
 
 // START SERVER

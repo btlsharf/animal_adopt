@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
-    <%- include('navbar') %>
-    <%- include('flash') %>
+    <%- include('../partials/_navbar') %>
     <main class="container">
     <div class="profile-page">
         <div class="profile-container">
@@ -19,10 +18,9 @@
                 <div class="profile-info">
                     <h1><%= user.username %></h1>
                     <p class="profile-email"><%= user.email %></p>
-                    <p class="profile-joined">Member since <%= new Date(user.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) %></p>
                 </div>
                 <div class="profile-actions">
-                    <a href="/user/show/edit" class="btn btn-primary">Edit Profile</a>
+                    <a href="/users/show/edit" class="btn btn-primary">Edit Profile</a>
                 </div>
             </div>
             
@@ -30,7 +28,7 @@
                 <div class="stat-card">
                     <h3>Quick Links</h3>
                     <ul class="profile-links">
-                        <li><a href="/user/my-pets">My Listed Pets</a></li>
+                        <li><a href="/users/my-pets">My Listed Pets</a></li>
                         <li><a href="/favorites">My Favorites</a></li>
                         <li><a href="/pets/new/form">List a New Pet</a></li>
                     </ul>

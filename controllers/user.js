@@ -23,12 +23,12 @@ router.get('/show/edit', async (req, res) => {
   } catch (error) {
     console.error(error);
     req.flash('error', 'Error loading edit form');
-    res.redirect('/user/show');
+    res.redirect('/users/show');
   }
 });
 
 // Update profile
-router.post('/show/edit', async (req, res) => {
+router.put('/profile', async (req, res) => {
   try {
     const { username, email } = req.body;
     const user = await User.findById(req.session.user._id);
@@ -37,7 +37,7 @@ router.post('/show/edit', async (req, res) => {
       const existingUser = await User.findOne({ username });
       if (existingUser) {
         req.flash('error', 'Username already taken');
-        return res.redirect('/user/show/edit');
+        return res.redirect('/users/profile/edit');
       }
     }
 
@@ -45,7 +45,7 @@ router.post('/show/edit', async (req, res) => {
       const existingEmail = await User.findOne({ email });
       if (existingEmail) {
         req.flash('error', 'Email already in use');
-        return res.redirect('/user/show/edit');
+        return res.redirect('/users/profile/edit');
       }
     }
 
@@ -53,24 +53,24 @@ router.post('/show/edit', async (req, res) => {
     user.email = email;
     await user.save();
 
-    // Update session info too
     req.session.user.username = username;
     req.session.user.email = email;
 
     req.flash('success', 'Profile updated successfully');
-    res.redirect('/user/show');
+    res.redirect('/users/show');
   } catch (error) {
     console.error(error);
     req.flash('error', 'Error updating profile');
-    res.redirect('/user/show/edit');
+    res.redirect('/users/show/edit');
   }
 });
+
 
 // Show user's pets
 router.get('/my-pets', async (req, res) => {
   try {
     const pets = await Pet.find({ owner: req.session.user._id });
-    res.render('user/my-pets', { pets });
+    res.render('users/my-pets', { pets });
   } catch (error) {
     console.error(error);
     req.flash('error', 'Error loading your pets');
