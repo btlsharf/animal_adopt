@@ -87,11 +87,11 @@
                 <% if (currentUser && currentUser._id.toString() !== pet.owner._id.toString()) { %>
                     <div class="pet-favorite">
                         <% if (isFavorite) { %>
-                            <form action="/favorites/<%= pet._id %>?_method=DELETE" method="POST">
+                            <form action="/users/favorites/<%= pet._id %>?_method=DELETE" method="POST">
                                 <button type="submit" class="btn btn-secondary">❤️ Remove from Favorites</button>
                             </form>
                         <% } else { %>
-                            <form action="/favorites/<%= pet._id %>" method="POST">
+                            <form action="/users/favorites/<%= pet._id %>" method="POST">
                                 <button type="submit" class="btn btn-primary">🤍 Add to Favorites</button>
                             </form>
                         <% } %>

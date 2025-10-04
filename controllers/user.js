@@ -27,6 +27,50 @@ router.get('/favorites', async (req, res) => {
   }
 });
 
+// Add pet to favorites
+router.post('/favorites/:id', async (req, res) => {
+  try {
+    const petId = req.params.id;
+    const pet = await Pet.findById(petId);
+    if (!pet) {
+      req.flash('error', 'Pet not found');
+      return res.redirect('/pets');
+    }
+    const user = await User.findById(req.session.user._id);
+    if (user.favorites.includes(petId)) {
+      req.flash('error', 'Pet already in favorites');
+      return res.redirect(`/pets/${petId}`);
+    }
+    user.favorites.push(petId);
+    await user.save();
+    req.flash('success', 'Added to favorites!');
+    res.redirect(`/pets/${petId}`);
+  } catch (error) {
+    console.error(error);
+    req.flash('error', 'Error adding to favorites');
+    res.redirect('/pets');
+  }
+});
+
+// Remove pet from user's favorites
+router.delete('/favorites/:id', async (req, res) => {
+  try {
+    const petId = req.params.id;
+    const user = await User.findById(req.session.user._id);
+
+    user.favorites = user.favorites.filter(favId => favId.toString() !== petId);
+    await user.save();
+
+    req.flash('success', 'Removed from favorites');
+    res.redirect(`/pets/${petId}`);
+  } catch (error) {
+    console.error(error);
+    req.flash('error', 'Error removing from favorites');
+    res.redirect('/pets');
+  }
+});
+
+
 // Show edit profile form
 router.get('/show/edit', async (req, res) => {
   try {
