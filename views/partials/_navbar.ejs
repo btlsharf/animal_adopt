@@ -2,7 +2,6 @@
     <div class="container nav-container">
         <a href="/pets" class="logo">
             <img src="/resources/logo.png" alt="AdoptaPal Logo" class="logo-img">
-             AdoptaPal🐾
         </a>
         
         <ul class="nav-links">
@@ -10,9 +9,13 @@
             
             <% if (currentUser) { %>
                 <li><a href="/pets/new">List a Pet</a></li>
-                <li><a href="/favorites">Favorites</a></li>
+                <li><a href="/users/favorites">Favorites</a></li>
                 <li><a href="/users/my-pets">My Pets</a></li>
                 <li><a href="/users/show" class="dropdown-toggle">My Profile</a></li>
+                <% if (user) { %>
+                        <a href="/auth/sign-out" class="btn btn-secondary">Sign out</a>
+                    </p>
+                <%} %>
             <% } else { %>
                 <li><a href="/auth/sign-in">Login</a></li>
                 <li><a href="/auth/sign-up" class="btn-primary">Sign Up</a></li>

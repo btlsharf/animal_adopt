@@ -12,6 +12,7 @@ const flash = require('connect-flash');
 const path = require('path');
 const isSignedIn = require('./middleware/is-signed-in.js');
 const passUserToView = require('./middleware/pass-user-to-view.js');
+const helmet = require('helmet');
 
 // Controllers
 const authController = require('./controllers/auth.js');
@@ -32,7 +33,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(methodOverride('_method'));
 app.use(morgan('dev'));
-
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      connectSrc: ["'self'"],    }
+  }
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/styles', express.static(path.join(__dirname, 'styles')));
 app.use('/resources', express.static('resources'));

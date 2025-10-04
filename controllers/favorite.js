@@ -5,6 +5,7 @@ const Pet = require('../models/pet');
 
 // Get all favorites
 router.get('/', async (req, res) => {
+    console.log("GET /favorites route hit, user:", req.session.user);
   try {
     const user = await User.findById(req.session.user._id).populate({
       path: 'favorites',

@@ -15,6 +15,18 @@ router.get('/show', async (req, res) => {
     }
 });
 
+// Show user's favorite pets
+router.get('/favorites', async (req, res) => {
+  try {
+    const user = await User.findById(req.session.user._id).populate('favorites');
+    res.render('users/favorites', { favorites: user.favorites });
+  } catch (error) {
+    console.error(error);
+    req.flash('error', 'Error loading favorites');
+    res.redirect('/pets');
+  }
+});
+
 // Show edit profile form
 router.get('/show/edit', async (req, res) => {
   try {

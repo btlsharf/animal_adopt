@@ -10,11 +10,11 @@
   <%- include('partials/_navbar') %>
   <main class="container">
     <div class="form-page">
-      <div class="form-container">
+      <div class="form-container" id="home-welcome">
         <% if (user) { %>
           <h1 class="page-title">Welcome to the app, <%= user.username %>!</h1>
           <p class="form-subtitle">
-            <a href="/auth/sign-out" class="btn btn-secondary">Sign out</a>
+            <a href="/pets" class="btn btn-secondary">Find your new best friend here🐾</a>
           </p>
         <% } else { %>
           <h1 class="page-title">Welcome to the app, guest.</h1>
